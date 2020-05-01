@@ -2,7 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import sqlite3
-import urllib.request
+import billboard
+#import urllib.request
 
 # res = requests.get('https://www.azlyrics.com/lyrics/samsmith/dancingwithastranger.html')
 #singer와 title을 적으면 가사를 찾아주는 함수
@@ -64,11 +65,19 @@ def createDBtable():
 
 #빌보드를 가져와서 txt파일을 만든다.
 def get_billboard_data():
-    pass
+    chart = billboard.ChartData('hot-100')
+    f = open("billboard.txt", 'w')
+    for i in range(100):
+        artist = chart[i].artist
+        title = chart[i].title
+        artist_title = artist + ' - ' + title + '\n'
+        f.write(artist_title)
+    f.close()
 
 if __name__ == "__main__":
     db = "music.db"
     createDBtable()
+    get_billboard_data()
 
     f = open("billboard.txt", 'r')
     lines = f.readlines()
