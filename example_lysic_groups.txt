@@ -1,0 +1,68 @@
+
+-1   :: size = 32   sim = 0.3391
+['rock', 'ice', 'front', 'felt', 'time', 'wan', 'close', 'inside', 'sun', 'water', 'bale', 'sky', 'quick', 'chest', 'yesterday', 'lemon', 'damn', 'must', 'lipstick', 'moon', 'pill', 'lean', 'mouth', 'piece', 'wake', 'plain', 'breath', 'there', 'city', 'freeze', 'hole', 'empty']
+
+0    :: size = 41   sim = 0.0006
+['happy', 'under', 'shaky', 'next', 'other', 'some', 'just', 'clearly', 'really', 'all', 'weak', 'around', 'easy', 'righteous', 'ever', 'never', 'always', 'barely', 'proud', 'hard', 'along', 'anxious', 'mad', 'before', 'too', 'golden', 'about', 'beautiful', 'through', 'only', 'lazy', 'honest', 'after', 'every', 'away', 'alone', 'pretty', 'instead', 'probably', 'several', 'ago']
+
+1    :: size = 26   sim = 0.4624
+['right', 'help', 'work', 'hanging', 'call', 'road', 'demon', 'drive', 'pic', 'creep', 'double', 'son', 'paradise', 'hat', 'hell', 'here', 'whole', 'middle', 'key', 'grab', 'slide', 'medicine', 'pas', 'suit', 'down', 'beat']
+
+2    :: size = 14   sim = 0.5394
+['turn', 'wonder', 'fix', 'thing', 'stay', 'look', 'spark', 'sleeping', 'bounce', 'use', 'wrong', 'way', 'sin', 'wreck']
+
+3    :: size = 47   sim = 0.5213
+['fire', 'care', 'move', 'traffic', 'take', 'out', 'race', 'going', 'hold', 'withdrawal', 'deal', 'change', 'do', 'lick', 'show', 'coming', 'steal', 'punch', 'touch', 'playing', 'crash', 'doom', 'kiss', 'walk', 'wait', 'attack', 'stop', 'start', 'spin', 'running', 'hit', 'escape', 'roll', 'drink', 'step', 'push', 'pull', 'run', 'mud', 'damage', 'let', 'song', 'trouble', 'slip', 'knock', 'solo', 'scream']
+
+4    :: size = 18   sim = 0.3875
+['know', 'swat', 'fast', 'wipe', 'get', 'swim', 'think', 'dare', 'sell', 'cruise', 'save', 'try', 'impress', 'shy', 'relapse', 'coughing', 'smart', 'blur']
+
+5    :: size = 44   sim = 0.3259
+['stash', 'pour', 'be', 'come', 'reveal', 'hear', 'free', 'lose', 'shut', 'understand', 'leather', 'see', 'breathe', 'learn', 'deceive', 'bleed', 'heal', 'flame', 'forget', 'say', 'fuck', 'drown', 'spend', 'sing', 'forgive', 'buy', 'exhale', 'off', 'own', 'suck', 'slow', 'busy', 'survive', 'afford', 'believe', 'bulletproof', 'give', 'tend', 'inhale', 'commit', 'sip', 'put', 'long', 'describe']
+
+6    :: size = 11   sim = 0.5189
+['rainbow', 'focus', 'echo', 'love', 'pain', 'truth', 'feeling', 'feel', 'nightmare', 'sound', 'life']
+
+7    :: size = 31   sim = 0.4955
+['glow', 'size', 'first', 'hope', 'speed', 'passion', 'now', 'last', 'bad', 'standing', 'cold', 'state', 'thrill', 'want', 'chance', 'anxiety', 'sleep', 'black', 'satisfaction', 'lap', 'high', 'need', 'blood', 'good', 'quiet', 'hurt', 'red', 'pressure', 'wild', 'fear', 'trust']
+
+8    :: size = 19   sim = 0.5091
+['notice', 'over', 'one', 'devil', 'make', 'wheeze', 'reading', 'will', 'thought', 'like', 'eye', 'dream', 'model', 'pick', 'guess', 'plan', 'heart', 'mind', 'check']
+
+9    :: size = 11   sim = 0.4666
+['bitch', 'date', 'bug', 'may', 'same', 'pink', 'straight', 'lie', 'brown', 'better', 'white']
+
+10   :: size = 34   sim = 0.5430
+['wilder', 'crazy', 'president', 'hand', 'candidate', 'honey', 'babe', 'head', 'tell', 'jackson', 'guard', 'cheat', 'shooter', 'private', 'friend', 'pop', 'dick', 'planet', 'strawberry', 'low', 'baby', 'dry', 'more', 'have', 'judge', 'soul', 'drug', 'carter', 'bush', 'woman', 'boy', 'rose', 'draco', 'brother']
+
+11   :: size = 9    sim = 0.4717
+['shout', 'lay', 'special', 'blame', 'smile', 'guarantee', 'word', 'shit', 'cry']
+
+12   :: size = 7    sim = 0.2786
+['enough', 'eighty', 'much', 'nothing', 'thousand', 'hundred', 'then']
+
+13   :: size = 7    sim = 0.5372
+['overdrive', 'wear', 'blue', 'tie', 'still', 'rim', 'buckle']
+
+14   :: size = 15   sim = 0.4822
+['dance', 'keep', 'shell', 'six', 'phone', 'blind', 'dime', 'house', 'fell', 'bag', 'four', 'saw', 'knot', 'pouch', 'can']
+
+15   :: size = 9    sim = 0.4524
+['deep', 'spot', 'side', 'left', 'end', 'as', 'quarter', 'lot', 'forest']
+
+16   :: size = 10   sim = 0.4843
+['fee', 'wood', 'till', 'set', 'circle', 'couple', 'family', 'sex', 'people', 'band']
+
+17   :: size = 15   sim = 0.6192
+['full', 'season', 'go', 'day', 'night', 'fall', 'zip', 'morning', 'even', 'year', 'summer', 'cash', 'evening', 'leave', 'moment']
+
+18   :: size = 8    sim = 0.5326
+['mile', 'foot', 'ten', 'real', 'three', 'five', 'two', 'sea']
+
+19   :: size = 17   sim = 0.6149
+['seal', 'shoe', 'block', 'trap', 'street', 'light', 'jacket', 'digest', 'safe', 'stick', 'landing', 'box', 'glove', 'mine', 'dress', 'whip', 'die']
+
+20   :: size = 7    sim = 0.5954
+['arm', 'skin', 'guy', 'nose', 'strip', 'back', 'fly']
+
+avr sim = 0.4626212629698678
