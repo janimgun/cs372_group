@@ -107,5 +107,3 @@ if __name__ == "__main__":
             wr.writerow([singer, title, lyric_text])
         else:
             print("no lyric data")
-
-
