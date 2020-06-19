@@ -162,15 +162,15 @@ def convert_to_code(company, date):
         print("oh no")
 
 
-def main():
+def main(company = "005930", crawling_date = "2020.06.18"):
     """
     company에 company_list에 있는 회사 중 하나를 적고,
-    max_date에 날짜를 적으면,
-    현재부터 날짜까지 그 회사의 뉴스를 네이버 금융에서 크롤링하여 news_crawling.csv에 저장한다.
+    crawling_date 날짜를 적으면,
+    그 날짜의 그 회사의 뉴스를 네이버 금융에서 크롤링하여 news_crawling.csv에 저장한다.
     :return:
     """
-    company = "005930"  # 종목 코드, 005930은 삼성전자
-    crawling_date = "2020.06.18"  # 뉴스를 가져올 날짜, 연도.월.일 로 적으면 된다.
+    #company  종목 코드, 005930은 삼성전자
+    #crawling_date  뉴스를 가져올 날짜, 연도.월.일 로 적으면 된다.
 
     if crawling_date == datetime.datetime.today().strftime("%Y.%m.%d"):
         print("It's today, can't get result")
