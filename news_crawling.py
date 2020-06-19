@@ -6,6 +6,7 @@ import re
 import pandas as pd
 import os
 from datetime import datetime
+import datetime
 
 os.chdir('C:\cs372_group')  # 디렉토리 주소
 
@@ -48,7 +49,7 @@ def crawler(company_code, date):
         for i in date_result:
             temp = i.lstrip().split(' ')
             date_day.append(temp[0])
-            date_time.append(temp[1])
+            date_time.append(int(temp[1].split(':')[0]))
 
         # 뉴스 매체
         sources = html.select('.info')
@@ -58,7 +59,19 @@ def crawler(company_code, date):
         result = {"코드": company_result, "날짜": date_day, "시간": date_time, "언론사": source_result, "기사제목": title_result,
                   "링크": link_result}
         df_result = pd.DataFrame(result)
-        df_result = df_result.loc[(df_result["날짜"] == date)]
+
+        # 해당 날짜와 기사를 올린 날짜가 일치하는 것만 가져오기, 여기가 날짜에 대한 조건문
+        # 조건 1, 해당 날짜만 가져오기
+        # df_result = df_result.loc[(df_result["날짜"] == date)]
+        
+        # 조건 2, 그 전날 장이 끝난 4시 이후부터 그 당일 장이 시작하기 전 9시 까지의 뉴스
+        #YYYY.MM.DD로 나와있는 date를 변환 후
+        date_datetime = datetime.datetime.strptime(date, '%Y.%m.%d')
+        date_before = date_datetime + datetime.timedelta(days=-1)
+        date_before = date_before.strftime("%Y.%m.%d")
+        # df_result = df_result.loc[(df_result["날짜"] == )]
+        df_result = df_result.loc[((df_result["날짜"] == date_before) & (df_result["시간"] > 15)) ^ ((df_result["날짜"] == date) & (df_result["시간"] < 9))]
+
         if df_result.empty:
             if not df_news.empty:
                 break
@@ -88,7 +101,7 @@ def crawler(company_code, date):
     # 종목 리스트 파일 열기
 
 
-def get_price(company_code, date_max):
+def get_price(company_code, date):
     # day_count = "50"
     url = "https://fchart.stock.naver.com/sise.nhn?symbol={}&timeframe=day&count=300&requestType=0".format(
         company_code)
@@ -104,10 +117,16 @@ def get_price(company_code, date_max):
         df_inf.iloc[i] = str(inf[i]['data']).split('|')
 
     # df_inf['Date'] = datetime.strptime(df_inf['Date'],'%Y%m%d').strftime('%Y.%m.%d')
-    df_inf['Date'] = df_inf.Date.apply(lambda x: datetime.strptime(x, '%Y%m%d').strftime('%Y.%m.%d'))
+    df_inf['Date'] = df_inf.Date.apply(lambda x: datetime.datetime.strptime(x, '%Y%m%d').strftime('%Y.%m.%d'))
     code_index = [company_code] * len(df_inf.index)
     df_inf["코드"] = code_index
     df_inf = df_inf.set_index("코드")
+
+    date_datetime = datetime.datetime.strptime(date, '%Y.%m.%d')
+    date_before = date_datetime + datetime.timedelta(days=-1)
+    date_before = date_before.strftime("%Y.%m.%d")
+
+    df_inf = df_inf.loc[(df_inf["Date"] == date) ^ (df_inf["Date"] == date_before)]
 
     df_inf.to_csv('company_price.csv', mode='w', encoding='utf-8-sig')
     print(df_inf)
@@ -153,7 +172,7 @@ def main():
     company = "005930"  # 종목 코드, 005930은 삼성전자
     crawling_date = "2020.06.18"  # 뉴스를 가져올 날짜, 연도.월.일 로 적으면 된다.
 
-    if crawling_date == datetime.today().strftime("%Y.%m.%d"):
+    if crawling_date == datetime.datetime.today().strftime("%Y.%m.%d"):
         print("It's today, can't get result")
     else:
         convert_to_code(company, crawling_date)
