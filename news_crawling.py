@@ -118,8 +118,12 @@ def convert_to_code(company, maxpage):
 
 
 def main():
-    # info_main = input("=" * 50 + "\n" + "실시간 뉴스기사 다운받기." + "\n" + " 시작하시려면 Enter를 눌러주세요." + "\n" + "=" * 50)
-
+    """
+    company에 company_list에 있는 회사 중 하나를 적고,
+    max_date에 날짜를 적으면,
+    현재부터 날짜까지 그 회사의 뉴스를 네이버 금융에서 크롤링하여 news_crawling.csv에 저장한다.
+    :return:
+    """
     company = "삼성전자"
     max_date = "2020.06.18"
 
