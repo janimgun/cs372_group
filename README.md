@@ -1,9 +1,11 @@
 # cs372_group
 주제 : 시장의 상황을 잘 반영할 수 있는 증권 기사에 등장한 단어수를 분석하여 다음날의 주가 등락 여부를 예측하기 위한 프로젝트
+
 참고 : 
 1. https://github.com/tina0430/NewsAnalysis - 시장의 상황을 잘 반영할 수 있는 증권 기사에 등장한 단어수를 분석하여 다음날의 주가 등락 여부를 예측하기 위한 프로젝트 (복잡해서 도움이 안될수도, 전체적인 그림은 이렇게)
 2. https://hengju.tistory.com/36 - 네이버 금융 뉴스 제목과 링크를 csv파일로 저장해보기
 3. https://github.com/gyusu/naver-finance-board-crawler - 네이버 금융의 종목토론실 크롤러 (이걸 쓸지말지는 고민)
+4. https://github.com/seyoongit/news - 뉴스데이터로 주가지수 예측하는 논문 재현하기
 
 ## Method
 1. 네이버 금융에서 종목별 뉴스 크롤링

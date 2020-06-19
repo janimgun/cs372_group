@@ -161,6 +161,7 @@ def convert_to_code(company, maxpage):
         print("no name or code")
 
 
+<<<<<<< HEAD
 def main():
     # info_main = input("=" * 50 + "\n" + "실시간 뉴스기사 다운받기." + "\n" + " 시작하시려면 Enter를 눌러주세요." + "\n" + "=" * 50)
 
@@ -168,6 +169,22 @@ def main():
     max_date = "2020.06.15"
 
     convert_to_code(company, max_date)
+=======
+def main(company = "005930", crawling_date = "2020.06.18"):
+    """
+    company에 company_list에 있는 회사 중 하나를 적고,
+    crawling_date 날짜를 적으면,
+    그 날짜의 그 회사의 뉴스를 네이버 금융에서 크롤링하여 news_crawling.csv에 저장한다.
+    :return:
+    """
+    #company  종목 코드, 005930은 삼성전자
+    #crawling_date  뉴스를 가져올 날짜, 연도.월.일 로 적으면 된다.
+
+    if crawling_date == datetime.datetime.today().strftime("%Y.%m.%d"):
+        print("It's today, can't get result")
+    else:
+        convert_to_code(company, crawling_date)
+>>>>>>> 9ca9d67f087ae5b74a2ff31424466c04b494e535
 
 
 main()
