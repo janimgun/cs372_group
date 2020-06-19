@@ -161,7 +161,6 @@ def convert_to_code(company, maxpage):
         print("no name or code")
 
 
-<<<<<<< HEAD
 def main():
     # info_main = input("=" * 50 + "\n" + "실시간 뉴스기사 다운받기." + "\n" + " 시작하시려면 Enter를 눌러주세요." + "\n" + "=" * 50)
 
@@ -169,7 +168,6 @@ def main():
     max_date = "2020.06.15"
 
     convert_to_code(company, max_date)
-=======
 def main(company = "005930", crawling_date = "2020.06.18"):
     """
     company에 company_list에 있는 회사 중 하나를 적고,
@@ -184,7 +182,6 @@ def main(company = "005930", crawling_date = "2020.06.18"):
         print("It's today, can't get result")
     else:
         convert_to_code(company, crawling_date)
->>>>>>> 9ca9d67f087ae5b74a2ff31424466c04b494e535
 
 
 main()
