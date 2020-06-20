@@ -35,7 +35,7 @@ for i, I in enumerate(docs):
     print("\n")
 '''
 # 거래 대금을 대강 때려 맞춘다.
-VALUE = lambda GP: [(D,int(V)*int(PR)) for D, V, PR in zip(GP["Date"], GP['Volume'], GP['Open'])]
+VALUE = lambda GP: [(D,int(V)*int(PR)) for D, V, PR in zip(GP["Date"], GP['Volume'], GP['Close'])]
 CODE_AND_VALUE = {I:VALUE(get_price(I)) for I in companies}
 import bisect
 @nltk.memoize
