@@ -13,7 +13,7 @@ companies = set("005930 000660 207940 035420 068270 051910".split() +
 ["005930", "051910","096770", "003620", "005360", "068270"])
 companies = list(I for I in companies)# if I != "005930")
 # crawling_start_date 부터 현재까지 모을것이다.
-crawling_start_date = "2020.01.01"
+crawling_start_date = "2019.01.01"
 
 #def collect_and_generate_data():
 
@@ -22,7 +22,8 @@ for CP in companies:
     print(CP, CD)
     try:
         PDDATA = crawler(CP, CD )
-        docs_content.extend(PDDATA['기사내용'])
+        if PDDATA is None: print("EMPTY"); continue
+        #docs_content.extend(PDDATA['기사내용'])
         docs_title.extend(PDDATA['기사제목'])
         docs_date.extend(PDDATA['날짜'])
         docs_code.extend(PDDATA['코드'])

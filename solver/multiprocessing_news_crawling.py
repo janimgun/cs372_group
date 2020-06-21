@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import requests
 import re
 import pandas as pd
-import os
+import os, signal
 from datetime import datetime
 import datetime
 
@@ -52,6 +52,8 @@ def adv_crawler_part(args):
         source_result = [source.get_text() for source in sources]
         company_result = [str(company_code)] * len(date_result)
     
+        text_result = company_result
+        '''
         text_result = []
         for url_link in link_result:
             source_code2 = requests.get(url_link).text
@@ -62,9 +64,7 @@ def adv_crawler_part(args):
             ttt = re.split('ⓒ|▶', ttt)
             # print(ttt)
             text_result.append(ttt[0])
-    
-        company_result = [str(company_code)] * len(date_result)
-        
+        '''
         pre_R = [I for I in zip(company_result, date_day, date_time, source_result, title_result, link_result, text_result) if I[1] >= date]
         if len(pre_R) == 0: return None 
         '''
@@ -79,25 +79,34 @@ def adv_crawler_part(args):
                   "링크": link_result, "기사내용": text_result}
         df_result = pd.DataFrame(result)
         return df_result
+       
     try: return _sub()
     except: return None
+import multiprocessing
 def crawler(company_code, date):
-    last_result = None
+    def alarm_handler(signum, frame):
+        print("ALARM signal received")
+        raise TimeOutException()
     result = []
-    out_loop  =25
-    in_loop = 20
-    import multiprocessing
+    out_loop  =20
+    in_loop = 50
     if __name__ == 'multiprocessing_news_crawling':
-        with multiprocessing.Pool(4) as pool:
+        with multiprocessing.Pool(20) as pool:
             for i in range(out_loop):
                 #res = [func(I) for I in  [i*20 + j for j in range(20)]]
-                res = [I for I in pool.map(adv_crawler_part, [(company_code, date, i*in_loop + j) for j in range(in_loop)]) if I is not None]
-                print("res size = ", len(res))
-                if not res or (last_result and str(last_result) == str(res)) : break
-                last_result = res
+                
+                signal.signal(signal.SIGALRM, alarm_handler)
+                signal.alarm(50)
+                try: res = [I for I in pool.map(adv_crawler_part, [(company_code, date, i*in_loop + j) for j in range(in_loop)]) if I is not None]
+                except: print("timeOUT"); res = []
+                signal.alarm(0)
+                
+                print("res size = ", len(res), "total = ", len(result), "iter =", i )
+                if not res:break
                 result.extend(res)
+                if (result and str(result[-1]) == str(res)) : break
                 if len(res) < in_loop - 5: break;
-    return pd.concat(result)
+    return pd.concat(result) if len(result) else None
 def get_price(company_code):
     # day_count = "50"
     url = "https://fchart.stock.naver.com/sise.nhn?symbol={}&timeframe=day&count=300&requestType=0".format(
