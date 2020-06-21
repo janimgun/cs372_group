@@ -83,7 +83,7 @@ def data_to_dataset(datas, code_and_dates = None, labels = None, comments = None
         		[{W:V for W, V in F} for F, L in zip(features, labels) if L is None]
     else: return features, labels
     
-dataset, un_trainable_data = data_to_dataset(docs_title, list(zip(docs_code, docs_date)), None, list(zip(docs_code, docs_title, docs_link)))
+dataset, un_trainable_data = data_to_dataset(docs_title, list(zip(docs_code, docs_date)), None, list(zip(docs_code, docs_date, docs_title, docs_link)))
 random.shuffle(dataset)
 train_set, test_set = dataset[:int(len(dataset)*.9)],dataset[int(len(dataset)*.9):]
 
@@ -111,8 +111,9 @@ for I in dataset:
         DIC[i+'_value'] =j[1]
     DIC['label'] = I[1]
     DIC['code'] = I[2]
-    DIC['title'] = I[3]
-    DIC['url'] = I[4]
+    DIC['date'] = I[3]
+    DIC['title'] = I[4]
+    DIC['url'] = I[5]
     #PD.append(pd.DataFrame(DIC))
     PD = pd.concat([PD,pd.DataFrame(DIC)])
 open('dataset.csv', 'w+').close()
