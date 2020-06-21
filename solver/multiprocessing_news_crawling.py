@@ -72,7 +72,7 @@ def adv_crawler_part(args):
         try:print(page, pre_R[-1][1:2])
         except: print(page, pre_R)
         '''
-        [company_result, date_day, date_time, source_result, title_result, link_result, text_result] = zip(pre_R)
+        [company_result, date_day, date_time, source_result, title_result, link_result, text_result] = zip(*pre_R)
         #for i,I in enumerate([company_result, date_day, date_time, source_result, title_result, link_result, text_result]):
         #    I = [J[i] for J in pre_R]
         result = {"코드": company_result, "날짜": date_day, "시간": date_time, "언론사": source_result, "기사제목": title_result,
