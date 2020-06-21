@@ -20,14 +20,16 @@ crawling_start_date = "2020.01.01"
 for CP in companies:
     CD = crawling_start_date
     print(CP, CD)
-    PDDATA = crawler(CP, CD )
-    docs_content.extend(PDDATA['기사내용'])
-    docs_title.extend(PDDATA['기사제목'])
-    docs_date.extend(PDDATA['날짜'])
-    docs_code.extend(PDDATA['코드'])
-    docs_link.extend(PDDATA['링크'])
-    print(len(docs_title))
-    print("complete", CP)
+    try:
+        PDDATA = crawler(CP, CD )
+        docs_content.extend(PDDATA['기사내용'])
+        docs_title.extend(PDDATA['기사제목'])
+        docs_date.extend(PDDATA['날짜'])
+        docs_code.extend(PDDATA['코드'])
+        docs_link.extend(PDDATA['링크'])
+        print(len(docs_title))
+        print("complete", CP)
+    except: print("No collected")
 '''
 문장별로 무엇이 출력될지 궁금하다면 시도하길 바란다.
 docs = docs_title
@@ -41,8 +43,8 @@ for i, I in enumerate(docs):
     print("\n")
 '''
 # 거래 대금을 대강 때려 맞춘다.
-VALUE = lambda GP: [(D,int(V)*int(PR)) for D, V, PR in zip(GP["Date"], GP['Volume'], GP['Close'])]
-#VALUE = lambda GP: [(D, int(PR)) for D, V, PR in zip(GP["Date"], GP['Volume'], GP['Close'])]
+#VALUE = lambda GP: [(D,int(V)*int(PR)) for D, V, PR in zip(GP["Date"], GP['Volume'], GP['Close'])]
+VALUE = lambda GP: [(D, int(PR)) for D, V, PR in zip(GP["Date"], GP['Volume'], GP['Close'])]
 CODE_AND_VALUE = {I:VALUE(get_price(I)) for I in companies}
 import bisect
 @nltk.memoize
@@ -53,9 +55,9 @@ def up_or_down(code, date):
     전거래일 대비 다음거래일에서 거래대금이 감소할 날짜 :-1
     """
     V2 = bisect.bisect_right(CODE_AND_VALUE[code], (date, 0) )
-    if V2 == len(CODE_AND_VALUE[code]): return None
-    V1 = CODE_AND_VALUE[code][V2-1]
-    V2 = CODE_AND_VALUE[code][V2]
+    if V2+1 >= len(CODE_AND_VALUE[code]): return None
+    V1 = CODE_AND_VALUE[code][V2]
+    V2 = CODE_AND_VALUE[code][V2+1]
     #print(V1, V2)
     return -1 if V1[1] > V2[1] else int(V1[1] < V2[1])
 
@@ -80,12 +82,12 @@ def data_to_dataset(datas, code_and_dates = None, labels = None, comments = None
     features = build_feature()
     if return_format == "APPLY_FOR_NLTK_CLASSIFY":
         return [({W:V for W, V in F},L, *CC) for F, L, CC in zip(features, labels, comments) if L is not None], \
-        		[{W:V for W, V in F} for F, L in zip(features, labels) if L is None]
+        [({W:V for W, V in F},None, *CC) for F, L, CC in zip(features, labels, comments) if L is None]
     else: return features, labels
     
 dataset, un_trainable_data = data_to_dataset(docs_title, list(zip(docs_code, docs_date)), None, list(zip(docs_code, docs_date, docs_title, docs_link)))
-random.shuffle(dataset)
-train_set, test_set = dataset[:int(len(dataset)*.9)],dataset[int(len(dataset)*.9):]
+#random.shuffle(dataset)
+#train_set, test_set = dataset[:int(len(dataset)*.9)],dataset[int(len(dataset)*.9):]
 
 """
 현재 tf_idf에서 데이터 수집을 하지 않는다. 그에 따라 즉흥적으로 뉴스를 추가하지 못한다.
@@ -102,21 +104,24 @@ classifier = nltk.classify.DecisionTreeClassifier.train(train_set[:40])
 print(nltk.classify.accuracy(classifier, test_set))
 """
 import pandas as pd
-PD = pd.DataFrame()
-
-for I in dataset:
-    DIC = {}
-    for i,j in zip(["F1","F2", "F3", "F4", "F5"], I[0].items()):
-        DIC[i+'_name'] = j[0][:1]
-        DIC[i+'_value'] =j[1]
-    DIC['label'] = I[1]
-    DIC['code'] = I[2]
-    DIC['date'] = I[3]
-    DIC['title'] = I[4]
-    DIC['url'] = I[5]
-    #PD.append(pd.DataFrame(DIC))
-    PD = pd.concat([PD,pd.DataFrame(DIC)])
-open('dataset.csv', 'w+').close()
-PD.to_csv('dataset.csv', mode='w', encoding='utf-8-sig')
-
+def output_dataset_as_pd(dataset,fname):
+    DICS = []
+    for I in dataset:
+        DIC = {}
+        for i,j in zip(["F1","F2", "F3", "F4", "F5"], I[0].items()):
+            DIC[i+'_name'] = j[0][:1]
+            DIC[i+'_value'] =j[1]
+        DIC['label'] = I[1]
+        DIC['code'] = I[2]
+        DIC['date'] = I[3]
+        DIC['title'] = I[4]
+        DIC['url'] = I[5]
+        #PD.append(pd.DataFrame(DIC))
+        DICS.append(pd.DataFrame(DIC))
+    PD = pd.concat(DICS)
+    open(fname + '.csv', 'w+').close()
+    PD.to_csv(fname + '.csv', mode='w', encoding='utf-8-sig')
+    
+output_dataset_as_pd(dataset,"dataset")
+output_dataset_as_pd(un_trainable_data,"unlabeled_dataset")
 

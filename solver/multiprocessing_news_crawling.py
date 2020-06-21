@@ -72,8 +72,9 @@ def adv_crawler_part(args):
         try:print(page, pre_R[-1][1:2])
         except: print(page, pre_R)
         '''
-        for i,I in enumerate([company_result, date_day, date_time, source_result, title_result, link_result, text_result]):
-            I = [J[i] for J in pre_R]
+        [company_result, date_day, date_time, source_result, title_result, link_result, text_result] = zip(pre_R)
+        #for i,I in enumerate([company_result, date_day, date_time, source_result, title_result, link_result, text_result]):
+        #    I = [J[i] for J in pre_R]
         result = {"코드": company_result, "날짜": date_day, "시간": date_time, "언론사": source_result, "기사제목": title_result,
                   "링크": link_result, "기사내용": text_result}
         df_result = pd.DataFrame(result)
@@ -87,7 +88,7 @@ def crawler(company_code, date):
     in_loop = 20
     import multiprocessing
     if __name__ == 'multiprocessing_news_crawling':
-        with multiprocessing.Pool(5) as pool:
+        with multiprocessing.Pool(4) as pool:
             for i in range(out_loop):
                 #res = [func(I) for I in  [i*20 + j for j in range(20)]]
                 res = [I for I in pool.map(adv_crawler_part, [(company_code, date, i*in_loop + j) for j in range(in_loop)]) if I is not None]
@@ -95,7 +96,7 @@ def crawler(company_code, date):
                 if not res or (last_result and str(last_result) == str(res)) : break
                 last_result = res
                 result.extend(res)
-                if len(res) < in_loop / 2: break
+                if len(res) < in_loop - 5: break;
     return pd.concat(result)
 def get_price(company_code):
     # day_count = "50"
