@@ -16,7 +16,8 @@ def adv_crawler_part(args):
         company_code, date,page = args
         url = 'https://finance.naver.com/item/news_news.nhn?code=' + str(company_code) + '&page=' + str(page)
         #print(url)
-        source_code = requests.get(url).text
+        try : source_code = requests.get(url, timeout = 10).text
+        except: print("timeout", args); return None
         html = BeautifulSoup(source_code, "lxml")
     
         # 뉴스 제목
@@ -82,16 +83,19 @@ def adv_crawler_part(args):
 def crawler(company_code, date):
     last_result = None
     result = []
+    out_loop  =25
+    in_loop = 20
     import multiprocessing
     if __name__ == 'multiprocessing_news_crawling':
-        with multiprocessing.Pool(15) as pool:
-            for i in range(10):
+        with multiprocessing.Pool(5) as pool:
+            for i in range(out_loop):
                 #res = [func(I) for I in  [i*20 + j for j in range(20)]]
-                res = [I for I in pool.map(adv_crawler_part, [(company_code, date, i*50 + j) for j in range(50)]) if I is not None]
+                res = [I for I in pool.map(adv_crawler_part, [(company_code, date, i*in_loop + j) for j in range(in_loop)]) if I is not None]
                 print("res size = ", len(res))
                 if not res or (last_result and str(last_result) == str(res)) : break
                 last_result = res
                 result.extend(res)
+                if len(res) < in_loop / 2: break
     return pd.concat(result)
 def get_price(company_code):
     # day_count = "50"

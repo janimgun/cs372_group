@@ -9,8 +9,9 @@ docs_link = []
 
 # 제한적인 목록 규제
 companies = set("005930 000660 207940 035420 068270 051910".split() +
+                "034730 035720 005390 003000 035420 006400".split() +
 ["005930", "051910","096770", "003620", "005360", "068270"])
-companies = list(I for I in companies if I != "005930")
+companies = list(I for I in companies)# if I != "005930")
 # crawling_start_date 부터 현재까지 모을것이다.
 crawling_start_date = "2020.01.01"
 
@@ -82,7 +83,7 @@ def data_to_dataset(datas, code_and_dates = None, labels = None, comments = None
         		[{W:V for W, V in F} for F, L in zip(features, labels) if L is None]
     else: return features, labels
     
-dataset, un_trainable_data = data_to_dataset(docs_title, list(zip(docs_code, docs_date)), None, list(zip(docs_title, docs_link)))
+dataset, un_trainable_data = data_to_dataset(docs_title, list(zip(docs_code, docs_date)), None, list(zip(docs_code, docs_title, docs_link)))
 random.shuffle(dataset)
 train_set, test_set = dataset[:int(len(dataset)*.9)],dataset[int(len(dataset)*.9):]
 
@@ -109,8 +110,9 @@ for I in dataset:
         DIC[i+'_name'] = j[0][:1]
         DIC[i+'_value'] =j[1]
     DIC['label'] = I[1]
-    DIC['title'] = I[2]
-    DIC['url'] = I[3]
+    DIC['code'] = I[2]
+    DIC['title'] = I[3]
+    DIC['url'] = I[4]
     #PD.append(pd.DataFrame(DIC))
     PD = pd.concat([PD,pd.DataFrame(DIC)])
 open('dataset.csv', 'w+').close()
